@@ -4,6 +4,7 @@ Handles Connection duties (reconnecting etc.) transparently.
 """
 import logging
 import codecs
+import time
 
 from bluepy import btle
 
@@ -34,9 +35,10 @@ class BTLEConnection(btle.DefaultDelegate):
         _LOGGER.debug("Trying to connect to %s", self._mac)
         try:
             self._conn.connect(self._mac)
-        except btle.BTLEException as ex:
+        except btle.BTLETimeoutError as ex:
             _LOGGER.debug("Unable to connect to the device %s, retrying: %s", self._mac, ex)
             try:
+                time.sleep(1) # Something seems to go a bit screwy in the BT stack if you retry too fast. I suspect this is old, timedout and stuck connections
                 self._conn.connect(self._mac)
             except Exception as ex2:
                 _LOGGER.debug("Second connection try to %s failed: %s", self._mac, ex2)
