@@ -97,6 +97,9 @@ class Thermostat:
         self._conn = connection_cls(_mac)
         self._conn.set_callback(PROP_NTFY_HANDLE, self.handle_notification)
 
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print("Exit method of Thermo class")
+    
     def __str__(self):
         away_end = "no"
         if self.away_end:

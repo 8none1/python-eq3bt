@@ -42,6 +42,7 @@ class BTLEConnection(btle.DefaultDelegate):
                 self._conn.connect(self._mac)
             except Exception as ex2:
                 _LOGGER.debug("Second connection try to %s failed: %s", self._mac, ex2)
+                self._conn.disconnect()
                 raise
 
         _LOGGER.debug("Connected to %s", self._mac)
