@@ -38,11 +38,11 @@ class BTLEConnection(btle.DefaultDelegate):
         except btle.BTLETimeoutError as ex:
             _LOGGER.debug("Unable to connect to the device %s, retrying: %s", self._mac, ex)
             try:
-                time.sleep(1) # Something seems to go a bit screwy in the BT stack if you retry too fast. I suspect this is old, timedout and stuck connections
+                time.sleep(1) # This is the 2nd connect attempt let's give it a fighting chance to complete the existing connection
                 self._conn.connect(self._mac)
             except Exception as ex2:
                 _LOGGER.debug("Second connection try to %s failed: %s", self._mac, ex2)
-                self._conn.disconnect()
+                self._conn.disconnect() # Tear down the helper otherwise we end up with lots of dead processes
                 raise
 
         _LOGGER.debug("Connected to %s", self._mac)
