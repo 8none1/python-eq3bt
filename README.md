@@ -1,3 +1,8 @@
+# Will's fork....
+
+Have a look at my branch for changes.  I haven't merged them back in to this fork's master branch because I want to keep all my hacks seperate.  So far there is one improvement which might be useful.  It makes sure that the bluepy-helper closes properly by disconnecting the bluepy Peripheral when a connection times out.  It's a one line change but took hours of fiddling to work out.
+
+
 # python-eq3bt
 
 Python library and a command line tool for EQ3 Bluetooth smart thermostats, uses bluepy for BTLE communication.
